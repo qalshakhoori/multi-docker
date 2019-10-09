@@ -15,7 +15,7 @@ after_success:
   - docker build -t qassimov/multi-worker ./worker
   # Login into Docker hub to push images
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push qassimv/multi-client
-  - docker push qassimv/multi-nginx
-  - docker push qassimv/multi-server
-  - docker push qassimv/multi-worker
+  - docker push qassimov/multi-client
+  - docker push qassimov/multi-nginx
+  - docker push qassimov/multi-server
+  - docker push qassimov/multi-worker
