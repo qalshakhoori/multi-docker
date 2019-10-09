@@ -1,0 +1,21 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t qassimov/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true qassimov/react-test npm test
+
+after_success:
+  - docker build -t qassimov/multi-client ./client
+  - docker build -t qassimov/multi-nginx ./nginx
+  - docker build -t qassimov/multi-server ./server
+  - docker build -t qassimov/multi-worker ./worker
+  # Login into Docker hub to push images
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push qassimv/multi-client
+  - docker push qassimv/multi-nginx
+  - docker push qassimv/multi-server
+  - docker push qassimv/multi-worker
